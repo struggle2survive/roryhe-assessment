@@ -42,7 +42,6 @@ $neutral: (
   'gray-900': #212529,
   'black': #000000
 );
-
 // Background colors
 $background: (
   'primary': map.get($neutral, 'white'),
@@ -50,13 +49,13 @@ $background: (
   'tertiary': map.get($neutral, 'gray-200'),
   'dark': map.get($neutral, 'black')
 );
-
 // Text colors
 $text: (
   'primary': map.get($neutral, 'gray-900'),
   'secondary': map.get($neutral, 'gray-700'),
   'tertiary': map.get($neutral, 'gray-600'),
   'disabled': map.get($neutral, 'gray-500'),
+  'light': map.get($neutral, 'gray-300'),
   'inverse': map.get($neutral, 'white')
 );
 
@@ -98,5 +97,5 @@ $border-radius: (
   'md': 8px,
   'lg': 12px,
   'xl': 16px,
-  'full': 9999px
+  'circle': 50%
 );

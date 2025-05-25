@@ -1,0 +1,50 @@
+@use '@styles/mixin' as mx;
+@use '@styles/variables' as v;
+@use 'sass:map';
+
+.container {
+    @include mx.flex-container(column, space-between, center);
+    width: 100%;
+    max-width: 100%;
+
+    .img-container {
+        width: 100%;
+        height: 100%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: map.get(v.$border-radius, 'sm');
+        }
+    }
+    
+
+    .text-wrapper {
+        @include mx.flex-container(row, space-between, center);
+        width: 100%;
+        padding: v.$spacing-unit;
+        
+        .text-left {
+            @include mx.flex-container(column, flex-start, flex-start);
+            gap: v.$spacing-unit;
+    
+            font-size: map.get(v.$font-size, 'sm');
+            color: map.get(v.$text, 'tertiary');
+
+            .text-title {
+                color: map.get(v.$text, 'light');
+            }
+
+            .text-subtitle {
+                color: map.get(v.$text, 'disabled');
+            }
+        }
+    
+        .text-right {
+            font-size: map.get(v.$font-size, 'md');
+            font-weight: map.get(v.$font-weight, 'semi-bold');
+            color: map.get(v.$text, 'inverse');
+        }
+    }
+}
