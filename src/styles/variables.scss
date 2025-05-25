@@ -1,0 +1,102 @@
+@use 'sass:map';
+
+
+// screen breakpoints
+$breakpoints: (
+    'small': 480px,
+    'medium': 768px,
+    'large': 1200px
+);
+
+// Grid columns
+$grid-col-map: (
+  'default': 4,    // Default: 4 columns
+  'large': 3,      // Below 1200px: 3 columns
+  'medium': 2,     // Below 768px: 2 columns
+  'small': 1       // Below 480px: 1 column
+);
+
+// Spacing
+$spacing-unit: 8px;
+$spacing: (
+  'xs': $spacing-unit,      // 8px
+  'sm': $spacing-unit * 2,  // 16px
+  'md': $spacing-unit * 3,  // 24px
+  'lg': $spacing-unit * 4,  // 32px
+  'xl': $spacing-unit * 6,  // 48px
+  'xxl': $spacing-unit * 8  // 64px
+);
+
+// Colors
+// Neutral colors
+$neutral: (
+  'white': #FFFFFF,
+  'gray-100': #F8F9FA,
+  'gray-200': #E9ECEF,
+  'gray-300': #DEE2E6,
+  'gray-400': #CED4DA,
+  'gray-500': #ADB5BD,
+  'gray-600': #6C757D,
+  'gray-700': #495057,
+  'gray-800': #343A40,
+  'gray-900': #212529,
+  'black': #000000
+);
+
+// Background colors
+$background: (
+  'primary': map.get($neutral, 'white'),
+  'secondary': map.get($neutral, 'gray-100'),
+  'tertiary': map.get($neutral, 'gray-200'),
+  'dark': map.get($neutral, 'black')
+);
+
+// Text colors
+$text: (
+  'primary': map.get($neutral, 'gray-900'),
+  'secondary': map.get($neutral, 'gray-700'),
+  'tertiary': map.get($neutral, 'gray-600'),
+  'disabled': map.get($neutral, 'gray-500'),
+  'inverse': map.get($neutral, 'white')
+);
+
+// Border colors
+$border: (
+  'light': map.get($neutral, 'gray-200'),
+  'base': map.get($neutral, 'gray-300'),
+  'dark': map.get($neutral, 'gray-400')
+);
+
+$font-size: (
+  'xs': 12px,
+  'sm': 14px,
+  'base': 16px,
+  'md': 18px,
+  'lg': 20px,
+  'xl': 24px,
+  'xxl': 32px,
+  'xxxl': 48px
+);
+
+$font-weight: (
+  'light': 300,
+  'regular': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700
+);
+
+$line-height: (
+  'tight': 1.2,
+  'normal': 1.5,
+  'loose': 1.8
+);
+
+// Border radius
+$border-radius: (
+  'sm': 4px,
+  'md': 8px,
+  'lg': 12px,
+  'xl': 16px,
+  'full': 9999px
+);

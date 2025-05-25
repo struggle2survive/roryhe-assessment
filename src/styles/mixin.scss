@@ -1,0 +1,39 @@
+@use '@styles/variables' as v;
+@use "sass:map";
+
+@mixin flex-container (
+    $direction: row,
+    $justify: center,
+    $align: center
+) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+};
+
+@mixin respond-to($size, $type) {
+    $value: map.get(v.$breakpoints, $size);
+
+    @if $value != null {
+        @media screen and (#{$type}: #{$value}) {
+            @content;
+        }
+    } @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. ";
+    }
+};
+
+@mixin responsive-grid () {
+    display: grid;
+    grid-gap: map.get(v.$spacing, 'sm');
+    grid-template-columns: repeat(4, 1fr);
+
+    @each $screen, $col in v.$grid-col-map {
+        @if $screen != default {
+            @include respond-to($screen, max-width) {
+                grid-template-columns: repeat($col, 1fr);
+            }
+        }
+    }
+};
