@@ -1,0 +1,50 @@
+@use '@styles/variables' as v;
+@use '@styles/mixin' as mx;
+@use 'sass:map';
+
+.inner-filter-container {
+    width: 100%;
+    @include mx.flex-container(row, space-between, center);  
+    padding: map.get(v.$spacing, 'sm');
+
+    background-color: map.get(v.$neutral, 'gray-900');
+    border-radius: 4px;
+
+    .inner-filter-left {
+        @include mx.flex-container(row, flex-start, center);
+        flex: 1;
+
+        .ant-checkbox-wrapper span {
+            color: map.get(v.$text, 'disabled');
+        };
+
+        .ant-checkbox-inner {
+            background-color: map.get(v.$neutral, 'gray-700') !important;
+            border-color: map.get(v.$neutral, 'gray-700') !important;
+        };
+
+        .ant-checkbox-checked .ant-checkbox-inner {
+            background-color: map.get(v.$theme, 'primary') !important;
+            border-color: map.get(v.$theme, 'primary') !important;
+        };
+
+        .checkbox-group-label {
+            color: map.get(v.$text, 'disabled');
+            font-size: map.get(v.$font-size, 'sm');
+            line-height: map.get(v.$line-height, 'normal');
+            padding-right: map.get(v.$spacing, 'md');
+        };
+
+        .filter-slider {
+            width: 20%;
+            padding-left: map.get(v.$spacing, 'md');
+        };
+    }
+
+    .filter-reset-btn {
+        color: map.get(v.$text, 'disabled');
+        font-size: map.get(v.$font-size, 'sm');
+        font-weight: map.get(v.$font-weight, 'semibold');
+        cursor: pointer;
+    };
+}
