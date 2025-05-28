@@ -1,0 +1,5 @@
+@use '@styles/mixin' as mx;
+
+.list-container {
+   @include mx.responsive-grid()
+}
