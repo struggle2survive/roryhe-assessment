@@ -1,47 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAppDispatch } from '@redux/hooks';
-import { CheckboxOptionType, ConfigProvider } from 'antd';
+import { Navigate, BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 
-import { fetchContentList, getNext } from '@redux/reducer/contentSlice';
-import SearchBar from '@components/SearchBar';
-import Filter from '@components/Filter';
-import InfiniteList from '@components/InfiniteList';
-import '@styles/style.scss';
+import Layout from "@views/Layout"
+import ContentView from '@views/ContentView/ContentView';
+
+import '@styles/main.scss';
 import { theme } from '@styles/theme';
 
-const options: CheckboxOptionType<number>[] = [
-  { label: 'Paid', value: 0},
-  { label: 'Free', value: 1},
-  { label: 'View Only', value: 2}
-]
 
 const App = () => {
 
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(fetchContentList()).then(() => {
-      dispatch(getNext())
-    })
-  }, [])
-
-  const onChange = (checkedValues: number[]) => {
-    console.log(checkedValues)
-  }
-
   return (
       <ConfigProvider theme={theme}>
-        <div className='container'>
-          <div className='content-container'>
-            <div className='filter-container'>
-              <SearchBar />
-              <Filter options={options} onChange={onChange}/>
-            </div>
-            <div className='content-list-container'>
-              <InfiniteList />
-            </div>
-          </div>
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Navigate to="/content" replace />} />
+              <Route path="/content" element={<ContentView />}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </ConfigProvider>
   )
 };
