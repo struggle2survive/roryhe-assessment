@@ -16,7 +16,7 @@ const ContentView = () => {
 
     const dispatch = useAppDispatch()
     const [ searchParams, setSearchParams] = useSearchParams()
-    const filter: {[key: string]: unknown[]} | null= useAppSelector(state => state.filter.content)
+    const filter: {[key: string]: unknown[]} = useAppSelector(state => state.filter.content)
     const totalCount: number = useAppSelector(state => state.content.totalCount)
     const isFetching: boolean = useAppSelector(state => state.content.isFetching)
     const filterRef = useRef<FilterRef>(null)
@@ -26,7 +26,10 @@ const ContentView = () => {
     useFilter('content')
 
     useEffect(() => {
-        if (filter === null) return
+        dispatch(fetchContentList())
+    }, [])
+
+    useEffect(() => {
         const range: number[] = (filter['price'] as number[]) || DEFAULT_PRICE_RANGE
         const checked: number[] =  (filter['pricingOption'] as number[]) || []
         const keyword: string[] = (filter['keyword'] as string[]) || []
@@ -37,15 +40,18 @@ const ContentView = () => {
         filterRef.current?.setSliderDisabled(disabled)
         searchRef.current?.setKeyword(keyword[0])
 
-        fetchData()
+        if (!isFetching) {
+            dispatch(filterContentList(filter))
+        }
 
     }, [filter])
 
+    useEffect(() => {
+        if (!isFetching) {
+            dispatch(filterContentList(filter))
+        }
+    }, [isFetching])
 
-    const fetchData = async () => {
-        if (filter === null) return
-        await dispatch(fetchContentList(filter))
-    }
 
     const onCheckboxChange = (checkedValues: number[]) => {
         if (checkedValues.length === 0) {
@@ -92,7 +98,7 @@ const ContentView = () => {
                             onReset={onFilterReset}/>
                 </div>
                 <div className='content-list-container'>
-                    {totalCount === 0 ? <NoData /> : <InfiniteList />}
+                    {totalCount === 0 && !isFetching ? <NoData /> : <InfiniteList />}
                 </div>
             </div>
       </div>

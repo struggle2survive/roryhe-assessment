@@ -32,7 +32,7 @@ const InfiniteList = () => {
           {
               displayList.map((item: ContentItem) => <ItemCard item={item} key={item.id}/>)
           }
-          <div ref={scrollRef}>loading...</div>
+          <div ref={scrollRef}></div>
       </div>
   )
 }

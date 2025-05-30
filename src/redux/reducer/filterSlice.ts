@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: {[key: string]: {} | null} = {
-    content: null
+const initialState: {[key: string]: {}} = {
+    content: {}
 }
 
 export const filterSlice = createSlice({
