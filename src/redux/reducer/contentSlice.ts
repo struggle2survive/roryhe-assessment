@@ -57,11 +57,17 @@ export const contentSlice = createSlice({
                         if (key === 'keyword') {
                             const searchText = filter.keyword[0].toLocaleLowerCase()
                             return item.creator.toLocaleLowerCase().includes(searchText) || item.title.toLowerCase().includes(searchText)
-                        } else if (key === 'pricingOption') {
-                            return filter.pricingOption.includes(item.pricingOption)
-                        } else if (key === 'price') {
-                            const [min, max] = filter.price
-                            return item.price >= min && item.price <= max   && item.pricingOption === PricingOption.PAID
+                        } else if (key === 'pricingOption' || key === 'price') {
+                            const { pricingOption, price } = filter
+                            let flag = false
+                            if (item.pricingOption === PricingOption.PAID) {
+                                if (price) {
+                                    const [min, max] = filter.price
+                                    return item.price >= min && item.price <= max   && item.pricingOption === PricingOption.PAID
+                                }
+                            } else {
+                                return filter.pricingOption.includes(item.pricingOption)
+                            }
                         }
                     })
                 })
