@@ -28,6 +28,10 @@ $spacing: (
 );
 
 // Colors
+//
+$theme: (
+  'primary': #42cddd
+);
 // Neutral colors
 $neutral: (
   'white': #FFFFFF,
@@ -47,7 +51,7 @@ $background: (
   'primary': map.get($neutral, 'white'),
   'secondary': map.get($neutral, 'gray-100'),
   'tertiary': map.get($neutral, 'gray-200'),
-  'dark': map.get($neutral, 'black')
+  'dark': map.get($neutral, 'gray-800')
 );
 // Text colors
 $text: (

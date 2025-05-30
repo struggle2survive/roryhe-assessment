@@ -1,8 +1,9 @@
 export const theme = {
     components: {
         Input: {
-            activeBg: '#6C757D',
-            activeBorderColor: '#66F0FF'
+            activeBg: '#66F0FF',
+            activeBorderColor: '#66F0FF',
+            hoverBorderColor: '#66F0FF'
         },
         Slider: {
             dotActiveBorderColor: '#6C757D',

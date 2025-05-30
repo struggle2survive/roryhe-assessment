@@ -27,12 +27,12 @@
 @mixin responsive-grid () {
     display: grid;
     grid-gap: map.get(v.$spacing, 'sm');
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
     @each $screen, $col in v.$grid-col-map {
         @if $screen != default {
             @include respond-to($screen, max-width) {
-                grid-template-columns: repeat($col, 1fr);
+                grid-template-columns: repeat($col, minmax(0, 1fr));
             }
         }
     }

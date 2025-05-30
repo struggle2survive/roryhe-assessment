@@ -1,0 +1,33 @@
+@use '@styles/variables' as v;
+@use '@styles/mixin' as mx;
+@use "sass:map";
+
+.content-view-container {
+    width: 100%;
+    @include mx.flex-container(column, flex-start, center);
+
+    .content-container {
+        width: 100%;
+        padding: 0 map.get(v.$spacing, 'xl');
+
+        @include mx.respond-to(small, max-width) {
+            padding: map.get(v.$spacing, 'sm');
+        }
+
+        .filter-container {
+            @include mx.flex-container(column, flex-start, center);
+            gap:20px;
+            
+            padding-top: map.get(v.$spacing, 'sm');
+            padding-bottom: map.get(v.$spacing, 'sm');
+        };
+    }
+
+    .content-list-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

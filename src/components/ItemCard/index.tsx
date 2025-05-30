@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "antd";
 
-import { ContentItem, PRICING_OPTION_MAP, PricingOption } from "@utils/types";
+import { ContentItem, PricingOption } from "@utils/types";
+import { PRICING_OPTION_MAP } from "@utils/constants";
 import "./style.scss"
 
 interface ContentItemCardProps {
@@ -11,9 +11,9 @@ interface ContentItemCardProps {
 const ItemCard = React.memo(({ item }: ContentItemCardProps) => {
     
     return (
-        <div className="container">
+        <div className="item-card-container">
             <div className="img-container">
-                <img src={item.imagePath}/>
+                <img src={item.imagePath} loading="eager"/>
             </div>
             <div className="text-wrapper">
                 <div className="text-left">
