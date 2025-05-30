@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { url } = require('inspector');
 
 
 module.exports = function (isDev) {
@@ -15,7 +16,11 @@ module.exports = function (isDev) {
         resolve: {
             extensions: ['.tsx', '.ts', '.jsx', '.js'],
             alias: {
-                "@styles": path.resolve(__dirname, "src/styles")
+                "@styles": path.resolve(__dirname, "src/styles"),
+                "@components": path.resolve(__dirname, "src/components"),
+                "@utils": path.resolve(__dirname, "src/utils"),
+                "@redux": path.resolve(__dirname, "src/redux"),
+                "@views": path.resolve(__dirname, "src/views")
             }
         },
         module: {
