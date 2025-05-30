@@ -1,17 +1,15 @@
-
-
 export enum PricingOption {
     PAID = 0,
     FREE = 1,
     VIEW_ONLY = 2
 }
 
-export const PRICING_OPTION_MAP = ['Paid','FREE','View Only'] as const;
+export type FilterTypes = 'content'
 
-export type FilterOptions = {
+export type ContentListFilter = {
     creator: string,
     title: string,
-    pricingOptions: number,
+    pricingOption: number,
     price: {
         min: number,
         max: number

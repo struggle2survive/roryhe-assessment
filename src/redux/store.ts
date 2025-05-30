@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import contentReducer from './reducer/contentSlice';
+import contentReducer from '@redux/reducer/contentSlice';
+import filterReducer from '@redux/reducer/filterSlice';
 
 export const store = configureStore({
     reducer: {
-       content: contentReducer
+       content: contentReducer,
+       filter: filterReducer
     }
 })
 

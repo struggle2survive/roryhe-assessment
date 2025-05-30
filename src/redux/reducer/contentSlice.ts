@@ -1,29 +1,46 @@
-import { RootState } from '@redux/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ContentItem } from '@utils/types';
+import { ContentItem, PricingOption } from '@utils/types';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 const PAGE_SIZE = 8
 
 interface ContentState {
-    contentList: Array<ContentItem>
+    allData: Array<ContentItem>
     displayList: Array<ContentItem>
     cursor: number
     totalCount: number
+    isFetching: boolean
 }
 
 const initialState: ContentState = {
-    contentList: [],
+    allData: [],
     displayList: [],
     cursor: 0,
-    totalCount: 0
+    totalCount: 0,
+    isFetching: true
 } satisfies ContentState as ContentState
 
-export const fetchContentList = createAsyncThunk<ContentItem[]>(
+export const fetchContentList = createAsyncThunk<ContentItem[], {[key: string]: any}>(
     'content/fetchContentList',
-    async (_, thunkAPI) => {
+    async (filter: {[key: string]: any} | null, thunkAPI) => {
         let response = await fetch('https://closet-recruiting-api.azurewebsites.net/api/data')
-        const data = await response.json()
+        let data = await response.json()
+        if (filter && Object.keys(filter).length > 0) {
+            data = data.filter((item: ContentItem) => {
+                return Object.keys(filter).every((key: string) => {
+                    if (key === 'keyword') {
+                        const searchText = filter.keyword[0].toLocaleLowerCase()
+                        return item.creator.toLocaleLowerCase().includes(searchText) || item.title.toLowerCase().includes(searchText)
+                    } else if (key === 'pricingOption') {
+                        return filter.pricingOption.includes(item.pricingOption)
+                    } else if (key === 'price') {
+                        const [min, max] = filter.price
+                        return item.price >= min && item.price <= max   && item.pricingOption === PricingOption.PAID
+                    }
+                })
+            })
+        }
         return data
     }
 )
@@ -33,23 +50,55 @@ export const contentSlice = createSlice({
     initialState,
     reducers: {
         getNext(state) {
-            const items = state.contentList.slice(state.cursor, state.cursor + PAGE_SIZE)
+            const items = state.allData.slice(state.cursor, state.cursor + PAGE_SIZE)
             state.displayList = [...state.displayList, ...items]
-            state.cursor += 1
+            state.cursor += PAGE_SIZE
         },
         resetPaging(state) {
             state.cursor = 0
+        },
+        filterContentList(state, action: PayloadAction<{[key: string]: any}>) {
+            // const filter = action.payload
+            // const filterProps = Object.keys(filter)
+            // let data: Array<ContentItem> = []
+            // if (filterProps.length === 0) {
+            //     data = state.allData
+            //     state.filteredList = state.allData
+            // } else {
+            //     data = state.allData.filter((item: ContentItem) => {
+            //         return Object.keys(filter).every((key: string) => {
+            //             if (key === 'keyword') {
+            //                 const searchText = filter.keyword[0].toLocaleLowerCase()
+            //                 return item.creator.toLocaleLowerCase().includes(searchText) || item.title.toLowerCase().includes(searchText)
+            //             } else if (key === 'pricingOption') {
+            //                 return filter.pricingOption.includes(item.pricingOption)
+            //             } else if (key === 'price') {
+            //                 const [min, max] = filter.price
+            //                 return item.price >= min && item.price <= max   && item.pricingOption === PricingOption.PAID
+            //             }
+            //         })
+            //     })
+            // }
+            // state.filteredList = [...data]
+            // state.displayList = [...data]
+            // state.totalCount = data.length
+            // state.cursor = Math.min(data.length, PAGE_SIZE)
+            
         }
     },
     extraReducers(builder) {
         builder.addCase(fetchContentList.fulfilled, (state, action) => {
             const data = action.payload
-            state.contentList = data
+            const cursor = Math.min(data.length, PAGE_SIZE)
+            state.allData = data
+            state.displayList = data.slice(0, cursor)
+            state.cursor = cursor
             state.totalCount = data.length
+            state.isFetching = false
         })
     },
 })
 
-export const { getNext, resetPaging } = contentSlice.actions
+export const { getNext, resetPaging, filterContentList } = contentSlice.actions
 
 export default contentSlice.reducer
